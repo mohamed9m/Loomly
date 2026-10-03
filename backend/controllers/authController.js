@@ -147,7 +147,13 @@ const handleRefreshToken = async (req, res, next) => {
     refreshTokenDoc.revoked = true;
     refreshTokenDoc.replacedByToken = newRefreshTokenDoc._id;
     await refreshTokenDoc.save();
-    return res.cookie("refreshToken", newRefreshToken).json({ accessToken });
+    return res
+      .cookie("refreshToken", newRefreshToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+      })
+      .json({ accessToken });
   } catch (err) {
     console.error(err.name, err.message);
     if (
@@ -188,7 +194,7 @@ const handleLogout = async (req, res) => {
     );
 
     res.clearCookie("refreshToken");
-
+    console.log("User logged out successfully");
     return res.json({ message: "Logged out successfully" });
   } catch (err) {
     console.error(err);
