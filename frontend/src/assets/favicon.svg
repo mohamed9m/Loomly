@@ -1,0 +1,18 @@
+<svg width="72" height="72" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="loomGradIcon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#A3B37E" />
+      <stop offset="100%" stop-color="#7C8C5C" />
+    </linearGradient>
+  </defs>
+
+  <rect x="0" y="0" width="72" height="72" rx="18" fill="url(#loomGradIcon)" />
+
+  <path d="M20 16 V52 H54" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+
+  <path d="M20 26 H33" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" opacity="0.55" />
+  <path d="M20 36 H33" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" opacity="0.55" />
+  <path d="M20 46 H40" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" opacity="0.55" />
+
+  <circle cx="54" cy="52" r="4.5" fill="#ffffff" />
+</svg>

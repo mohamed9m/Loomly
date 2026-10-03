@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.7.0",
+    "jsonwebtoken": "^9.0.3",
+    "method-overload": "^0.1.1",
+    "method-override": "^3.0.0",
+    "mongoose": "^9.9.4"
+  },
+  "scripts": {
+    "devStart": "nodemon server.js",
+    "seed:admin": "node scripts/seedAdmin.js"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
