@@ -76,7 +76,8 @@ const handleLogin = async (req, res, next) => {
     res
       .cookie("refreshToken", refreshToken, {
         httpOnly: true,
-        sameSite: "lax",
+        secure: true,
+        sameSite: "none",
       })
       .json({ accessToken });
   } catch {
@@ -169,17 +170,30 @@ const handleRefreshToken = async (req, res, next) => {
 };
 
 const handleLogout = async (req, res) => {
-  const refreshToken = req.cookies.refreshToken;
-  const tokenHash = crypto
-    .createHash("sha256")
-    .update(refreshToken)
-    .digest("hex");
-  await RefreshToken.findOneAndUpdate(
-    { tokenHash: tokenHash },
-    { $set: { revoked: true } },
-  );
-  res.clearCookie("refreshToken");
-  res.json({ message: "Logged out successfully" });
+  try {
+    const refreshToken = req.cookies.refreshToken;
+
+    if (!refreshToken) {
+      return res.sendStatus(204);
+    }
+
+    const tokenHash = crypto
+      .createHash("sha256")
+      .update(refreshToken)
+      .digest("hex");
+
+    await RefreshToken.findOneAndUpdate(
+      { tokenHash },
+      { $set: { revoked: true } },
+    );
+
+    res.clearCookie("refreshToken");
+
+    return res.json({ message: "Logged out successfully" });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Internal server error" });
+  }
 };
 
 module.exports = {
