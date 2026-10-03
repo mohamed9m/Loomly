@@ -10,7 +10,7 @@ import AuthProvider from "./components/AuthProvider";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
-import Profile from "./pages/Porfile";
+import Profile from "./pages/Profile";
 import Cart from "./pages/Cart";
 import Details from "./pages/Details";
 import About from "./pages/About";
