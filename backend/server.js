@@ -15,6 +15,7 @@ const allowedOrigins = [
   "https://loomly-three.vercel.app",
 ];
 
+app.set("trust proxy", 1);
 app.use(
   cors({
     origin: allowedOrigins,

@@ -194,7 +194,6 @@ const handleLogout = async (req, res) => {
     );
 
     res.clearCookie("refreshToken");
-    console.log("User logged out successfully");
     return res.json({ message: "Logged out successfully" });
   } catch (err) {
     console.error(err);
