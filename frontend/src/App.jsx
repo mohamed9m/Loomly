@@ -4,9 +4,10 @@ import axiosInstance from "./api/axios";
 import { useState, useReducer, useEffect } from "react";
 import ProductsData from "./context/ProductsData";
 import cartReducer from "./reducers/cartReducer";
-import { Route, Routes, useSearchParams, useLocation } from "react-router-dom";
+import { Route, Routes, useSearchParams } from "react-router-dom";
 import "./App.css";
 import AuthProvider from "./components/AuthProvider";
+import MainLayout from "./components/MainLayout";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
@@ -15,14 +16,12 @@ import Cart from "./pages/Cart";
 import Details from "./pages/Details";
 import About from "./pages/About";
 import ProductsPage from "./pages/ProductsPage";
-import Footer from "./components/Footer";
 import Checkout from "./pages/Checkout";
 import Contact from "./pages/Contact";
 import QuickCheckout from "./pages/QuickCheckout";
 import ThankYou from "./pages/ThanksPage";
 import NotFound from "./pages/NotFound";
 function App() {
-  const location = useLocation();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -59,9 +58,9 @@ function App() {
             loading,
           }}
         >
-          <main className="flex-grow-1">
-            <AuthProvider>
-              <Routes>
+          <AuthProvider>
+            <Routes>
+              <Route element={<MainLayout />}>
                 <Route path="/" Component={Home} />
                 <Route path="/products" Component={ProductsPage} />
                 <Route path="/cart" Component={Cart} />
@@ -75,14 +74,10 @@ function App() {
                 <Route path="/login" Component={Login} />
                 <Route path="/profile" Component={Profile} />
                 <Route path="*" Component={NotFound} />
-              </Routes>
-            </AuthProvider>
-          </main>
-          {!(
-            location.pathname.startsWith("/checkout") ||
-            location.pathname === "/register" ||
-            location.pathname === "/login"
-          ) && <Footer />}
+              </Route>
+              <Route path="*" Component={NotFound} />
+            </Routes>
+          </AuthProvider>
         </ProductsData.Provider>
       </div>
     </>
