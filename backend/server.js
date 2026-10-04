@@ -22,6 +22,8 @@ app.use(
     credentials: true,
   }),
 );
+console.log("TRUST PROXY =", app.get("trust proxy"));
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(methodOverride("_method"));

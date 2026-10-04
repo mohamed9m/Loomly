@@ -38,7 +38,6 @@ const handleRegister = async (req, res, next) => {
 };
 
 const handleLogin = async (req, res, next) => {
-  console.log("railway");
   const email = req.body.email;
   const password = req.body.password;
 
@@ -193,7 +192,7 @@ const handleLogout = async (req, res) => {
       { tokenHash },
       { $set: { revoked: true } },
     );
-    console.log("logged out");
+
     res.clearCookie("refreshToken");
     return res.json({ message: "Logged out successfully" });
   } catch (err) {
