@@ -73,7 +73,6 @@ function App() {
                 <Route path="/register" Component={Register} />
                 <Route path="/login" Component={Login} />
                 <Route path="/profile" Component={Profile} />
-                <Route path="*" Component={NotFound} />
               </Route>
               <Route path="*" Component={NotFound} />
             </Routes>
