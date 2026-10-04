@@ -20,6 +20,7 @@ import Checkout from "./pages/Checkout";
 import Contact from "./pages/Contact";
 import QuickCheckout from "./pages/QuickCheckout";
 import ThankYou from "./pages/ThanksPage";
+import NotFound from "./pages/NotFound";
 function App() {
   const location = useLocation();
   const [products, setProducts] = useState([]);
@@ -73,6 +74,7 @@ function App() {
                 <Route path="/register" Component={Register} />
                 <Route path="/login" Component={Login} />
                 <Route path="/profile" Component={Profile} />
+                <Route path="*" Component={NotFound} />
               </Routes>
             </AuthProvider>
           </main>
