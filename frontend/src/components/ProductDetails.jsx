@@ -1,19 +1,35 @@
 import { useParams, Link } from "react-router-dom";
 import { useContext, useState } from "react";
 import ProductsData from "../context/ProductsData";
-
+import axiosInstance from "../api/axios";
+import { useAuth } from "../context/AuthContext";
 function ProductDetails() {
   const [loading, setLoading] = useState(false);
   const { products, dispatch } = useContext(ProductsData);
-  const handleAddToCart = () => {
-    setLoading(true);
-    dispatch({
-      type: "addToCart",
-      payload: { ...currentProduct, quantity: 1 },
-    });
-    setTimeout(() => {
+  const productId = Number(useParams().id);
+  const product = products.find((item) => item.id === productId);
+  const { isAuthenticated } = useAuth();
+
+  const handleAddToCart = async () => {
+    try {
+      setLoading(true);
+      if (!isAuthenticated) {
+        dispatch({ type: "ADD", payload: { ...product, quantity: 1 } });
+        setLoading(false);
+        return;
+      }
+      const { data } = await axiosInstance.post(`/cart/${product._id}`); // DB is source of truth for cart
+      console.log(data);
+      const products = data.cart.products.map((item) => ({
+        ...item.product,
+        quantity: item.quantity,
+      }));
+      console.log(products);
+      dispatch({ type: "SET_CART", payload: products });
       setLoading(false);
-    }, 700);
+    } catch (err) {
+      console.log(err.response.data.message);
+    }
   };
   const { id } = useParams();
   const currentProduct = products.find((item) => item.id === Number(id));
