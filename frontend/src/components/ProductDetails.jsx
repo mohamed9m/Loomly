@@ -68,7 +68,7 @@ function ProductDetails() {
               </ul>
               <div>
                 <button
-                  className="btn border-0 rounded-5 ps-5 w-75 pe-5 cart-add-btn"
+                  className="btn border-0 rounded-3 ps-5 w-75 pe-5 cart-add-btn"
                   onClick={handleAddToCart}
                   disabled={loading}
                 >
@@ -84,7 +84,7 @@ function ProductDetails() {
                 </button>
                 <Link to={`/checkout/${id}`}>
                   <button
-                    className="btn btn-dark mt-3 rounded-5 ps-5 w-75 pe-5"
+                    className="btn btn-dark mt-3 rounded-3 ps-5 w-75 pe-5"
                     style={{ height: 45 }}
                   >
                     Buy Now

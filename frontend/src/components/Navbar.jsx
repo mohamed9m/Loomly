@@ -148,7 +148,7 @@ function NavBar() {
 
           {/* Logo */}
           <Link
-            className="navbar-brand fw-bold fs-4 text-dark"
+            className="navbar-brand fw-bold fs-4 me-auto text-dark"
             to={"/"}
             onClick={() => {
               window.scrollTo(0, 0);
