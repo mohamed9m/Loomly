@@ -20,7 +20,7 @@ function CartItem({ item }) {
         setTrashLoading(false);
         return;
       }
-      dispatch({ type: "REMOVE", payload: { item } });
+      dispatch({ type: "REMOVE", payload: item });
       setTrashLoading(false);
     } catch (err) {
       console.log(err.response.data.message);
@@ -41,7 +41,7 @@ function CartItem({ item }) {
         setQuantityLoading(false);
         return;
       }
-      dispatch({ type: "DECREASE", payload: { item } });
+      dispatch({ type: "DECREASE", payload: item });
       setQuantityLoading(false);
     } catch (err) {
       console.log(err.response.data.message);
