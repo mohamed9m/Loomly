@@ -5,13 +5,14 @@ import { ShoppingCartPlus } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import axiosInstance from "../api/axios";
 function ProductCard({ product }) {
-  const isAuthenticated = useAuth();
+  const { isAuthenticated } = useAuth();
   const [loading, setLoading] = useState(false);
   const { dispatch } = useContext(ProductsData);
   const handleAddToCart = async () => {
     setLoading(true);
-    console.log(product);
     try {
+      console.log(isAuthenticated);
+      console.log(!isAuthenticated);
       if (!isAuthenticated) {
         dispatch({ type: "ADD", payload: { ...product, quantity: 1 } });
         return;
@@ -22,10 +23,9 @@ function ProductCard({ product }) {
         ...item.product,
         quantity: item.quantity,
       }));
-      console.log(products);
       dispatch({ type: "SET_CART", payload: products });
     } catch (err) {
-      console.log(err.response.message);
+      console.log(err.response.status);
     } finally {
       setTimeout(() => {
         setLoading(false);
