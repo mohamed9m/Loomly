@@ -52,15 +52,15 @@ export default function Products() {
       <>
         <div className="container py-5 text-center">
           <h2 className="fw-medium mb-4">
-            Search results for
+            Search for
             <span className="ms-2" style={{ color: "var(--accent-dark)" }}>
               {search}
             </span>
           </h2>
-          <h2 className="fw-normal">No Matching Results</h2>
+          <h2 className="fw-normal mt-5">No Matching Results</h2>
           <Link to="/products">
             <button
-              className="btn border-0 btn-primary mt-3 rounded-5 px-5 cart-add-btn"
+              className="btn border-0 btn-primary mt-3 rounded-2 px-5 cart-add-btn"
               style={{ height: 45 }}
             >
               Continue Shopping

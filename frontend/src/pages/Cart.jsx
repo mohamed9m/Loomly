@@ -4,7 +4,9 @@ import ProductsData from "../context/ProductsData";
 import Navbar from "../components/Navbar";
 import CartItem from "../components/CartItem";
 import { ShoppingCart } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
 function Cart() {
+  const { isLoading } = useAuth();
   const { cart } = useContext(ProductsData);
   console.log(cart);
   const totalPrice = cart.reduce(
@@ -12,7 +14,18 @@ function Cart() {
     0,
   );
 
-  if (cart.length === 0) {
+  if (isLoading) {
+    return (
+      <>
+        <Navbar />
+        <div className="container py-5 d-flex align-items-center justify-content-center vh-100">
+          <div className="spinner-border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </>
+    );
+  } else if (cart.length === 0) {
     return (
       <>
         <Navbar />
@@ -23,7 +36,7 @@ function Cart() {
             className="mb-2"
             style={{ color: "var(--accent-color)" }}
           />
-          <h3 className="fw-medium fs-1 mb-2 text-dark">No products in cart</h3>
+          <h3 className="fw-medium fs-1 mb-2 ">No products in cart</h3>
           <p className="text-muted mb-4">
             Looks like you haven't added anything yet.
           </p>
@@ -58,7 +71,7 @@ function Cart() {
 
             <h3
               className="fw-bold mb-0"
-              style={{ color: "var(--accent-dark)" }}
+              style={{ color: "var(--text-accent)" }}
             >
               ${totalPrice.toFixed(2)}
             </h3>

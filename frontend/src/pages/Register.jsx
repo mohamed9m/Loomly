@@ -5,6 +5,7 @@ import { Link, useNavigate, Navigate } from "react-router-dom";
 import axiosInstance from "../api/axios";
 import { useAuth } from "../context/AuthContext";
 export default function Register() {
+  const [registring, setRegistring] = useState(false);
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
   const navigate = useNavigate();
@@ -66,15 +67,15 @@ export default function Register() {
     }));
     setErrors((previousErrors) => ({
       ...previousErrors,
-      [name]: value,
+      [name]: "",
     }));
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     if (!validate()) return;
     try {
+      setRegistring(true);
       setServerError(""); // Clear any previous server error before making the request
       const response = await axiosInstance.post(
         "/auth/register",
@@ -88,6 +89,7 @@ export default function Register() {
         },
       );
       console.log(response.data);
+      setRegistring(false);
       navigate("/login", { state: { registered: true } });
     } catch (err) {
       const status = err.response?.status;
@@ -169,7 +171,7 @@ export default function Register() {
               font-size="40"
               font-weight="600"
               letter-spacing="0.5"
-              fill="#20241a"
+              fill="var(--text-primary)"
             >
               Loomly
             </text>
@@ -305,15 +307,21 @@ export default function Register() {
                 type="submit"
                 className="btn search-btn register-btn w-100 "
               >
-                Create Account
+                {registring ? (
+                  <span
+                    className="spinner-border spinner-border-sm"
+                    style={{ "--bs-spinner-border-width": "0.12em" }}
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                ) : (
+                  "Create Account"
+                )}
               </button>
 
               <p className="text-center text-muted mt-4 mb-0">
                 Already have an account?{" "}
-                <Link
-                  to="/login"
-                  className="text-decoration-none text-dark fw-semibold"
-                >
+                <Link to="/login" className="text-decoration-none fw-semibold">
                   Sign In
                 </Link>
               </p>

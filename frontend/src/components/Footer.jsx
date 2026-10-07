@@ -3,7 +3,7 @@ export default function Footer() {
   return (
     <footer
       className="mt-5 py-5 border-top"
-      style={{ backgroundColor: "#FAF9F6" }}
+      style={{ backgroundColor: "var(--bg-footer)" }}
     >
       <div className="container">
         <div className="row g-4">

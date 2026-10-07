@@ -15,6 +15,12 @@
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Loomly</title>
+    <script>
+      try {
+        var theme = localStorage.getItem("theme") || "light";
+        document.documentElement.setAttribute("data-bs-theme", theme);
+      } catch {}
+    </script>
   </head>
   <body>
     <div id="root"></div>

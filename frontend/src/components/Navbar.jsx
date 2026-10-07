@@ -1,14 +1,9 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-regular-svg-icons";
-import { faMagnifyingGlass, faXmark } from "@fortawesome/free-solid-svg-icons";
-
-import { ShoppingBag, Search } from "lucide-react";
-
+import { ShoppingBag, Search, UserRound, X } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState, useRef, useEffect } from "react";
 import ProductsData from "../context/ProductsData";
 import { useAuth } from "../context/AuthContext";
-
+import ThemeToggle from "./ThemeToggle";
 function NavBar() {
   const { cart } = useContext(ProductsData);
   const { isLoading, isAuthenticated } = useAuth();
@@ -20,7 +15,6 @@ function NavBar() {
     (total, product) => total + product.quantity,
     0,
   );
-
   // Close on Escape key
   useEffect(() => {
     const handleEscape = (e) => {
@@ -66,12 +60,12 @@ function NavBar() {
           ref={searchOverlayRef}
           className="search-overlay position-fixed top-0 start-0 w-100 animate-slide-down"
           style={{
-            backgroundColor: "#f3f0e8",
+            backgroundColor: "var(--bg-nav)",
             borderBottom: "1px solid rgba(0,0,0,0.08)",
             boxShadow: "0 8px 24px rgba(0,0,0,0.08)",
             paddingTop: "1rem",
             paddingBottom: "1.25rem",
-            zIndex: 1040, // higher than nav's max of 1030
+            zIndex: 1040,
           }}
           onClick={(e) => e.stopPropagation()}
           role="search"
@@ -79,17 +73,19 @@ function NavBar() {
           <div className="container">
             <form
               onSubmit={handleSearchSubmit}
-              className="d-flex align-items-center gap-2 w-100"
+              className="d-flex align-items-center gap-2 w-100 "
             >
               <label htmlFor="nav-search" className="visually-hidden">
                 Search products
               </label>
 
-              <div className="search-pill d-flex align-items-center flex-grow-1 bg-white rounded-3 shadow-sm p-1">
+              <div
+                className="search-bar border d-flex align-items-center flex-grow-1 rounded-2 shadow-sm p-1"
+                style={{ backgroundColor: "var(--bs-body-bg)" }}
+              >
                 <input
                   id="nav-search"
-                  type="search"
-                  className="form-control form-control-lg border-0 shadow-none bg-transparent flex-grow-1 search-input"
+                  className="form-control form-control-lg border-0 shadow-none flex-grow-1 search-input"
                   placeholder="Search products"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
@@ -97,11 +93,11 @@ function NavBar() {
                 />
                 <button
                   type="submit"
-                  className="btn search-btn d-flex align-items-center justify-content-center"
+                  className="btn rounded-2 border-0 d-flex align-items-center justify-content-center"
                   disabled={!searchQuery.trim()}
                   aria-label="Search"
                 >
-                  <FontAwesomeIcon icon={faMagnifyingGlass} />
+                  <Search size={27} strokeWidth={2} />
                 </button>
               </div>
 
@@ -114,7 +110,7 @@ function NavBar() {
                 }}
                 aria-label="Close search"
               >
-                <FontAwesomeIcon icon={faXmark} size="lg" />
+                <X size={27} />
               </button>
             </form>
           </div>
@@ -123,9 +119,9 @@ function NavBar() {
 
       {/* Main Navbar */}
       <nav
-        className={`navbar navbar-expand-lg navbar-light shadow-sm sticky-top py-xl-2 py-xxl-3 ${searchOpen ? "search-active" : ""}`}
+        className={`navbar navbar-expand-lg shadow-sm sticky-top py-xl-2 py-xxl-3 ${searchOpen ? "search-active" : ""}`}
         style={{
-          backgroundColor: "#f3f0e8",
+          backgroundColor: "var(--bg-nav)",
           zIndex: searchOpen ? 1030 : 1020,
           transition: "box-shadow 0.2s ease, z-index 0s 0.2s",
         }}
@@ -148,7 +144,7 @@ function NavBar() {
 
           {/* Logo */}
           <Link
-            className="navbar-brand fw-bold fs-4 me-auto text-dark"
+            className="navbar-brand fw-bold fs-4 me-auto "
             to={"/"}
             onClick={() => {
               window.scrollTo(0, 0);
@@ -223,19 +219,23 @@ function NavBar() {
           <div className="d-flex align-items-center gap-2 gap-lg-3 ms-sm-auto">
             {/* Search Trigger */}
             <button
-              className="btn btn-link text-dark p-0 position-relative"
-              style={{ fontSize: "1.25rem", lineHeight: 1 }}
+              className="btn btn-link  p-0 position-relative"
+              style={{
+                fontSize: "1.25rem",
+                lineHeight: 1,
+                color: "var(--text-primary)",
+              }}
               onClick={toggleSearch}
               aria-label={searchOpen ? "Close search" : "Open search"}
               aria-expanded={searchOpen}
               aria-controls="nav-search"
             >
-              <Search size={24} strokeWidth={1.2} />
+              <Search />
             </button>
 
             {/* Cart */}
             <Link
-              className="position-relative text-dark"
+              className="position-relative "
               style={{ fontSize: "1.25rem", lineHeight: 1 }}
               to="/cart"
               onClick={() => {
@@ -243,7 +243,7 @@ function NavBar() {
                 setSearchOpen(false);
               }}
             >
-              <ShoppingBag size={24} strokeWidth={1.75} />
+              <ShoppingBag strokeWidth={1.75} />
               {cartQuantity > 0 && (
                 <span
                   className="position-absolute top-0 start-100 translate-middle badge d-flex align-items-center rounded-pill"
@@ -267,7 +267,7 @@ function NavBar() {
                 style={{
                   width: "1.25rem",
                   height: "1.25rem",
-                  color: "#53662c",
+                  color: "var(--text-primary)",
                 }}
                 role="status"
               >
@@ -276,21 +276,21 @@ function NavBar() {
             ) : (
               <Link
                 to={isAuthenticated ? "/profile" : "/login"}
-                className="text-dark d-flex align-items-center ms-sm-1 ms-lg-0"
+                className=" d-flex align-items-center ms-sm-1 ms-lg-0"
                 style={{ fontSize: "1.4rem" }}
                 onClick={() => setSearchOpen(false)}
               >
-                <FontAwesomeIcon icon={faUser} />
+                <UserRound />{" "}
               </Link>
             )}
+            <ThemeToggle />
           </div>
-
           {/* Collapsible Nav Links */}
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav ms-auto mb-2 mb-lg-0 gap-lg-4 mt-3 mt-lg-0">
+          <div className="container collapse navbar-collapse" id="navbarNav">
+            <ul className="navbar-nav ms-lg-auto mb-2 mb-lg-0 gap-lg-4 mt-3 mt-lg-0">
               <li className="nav-item">
                 <Link
-                  className="nav-link fw-medium text-dark"
+                  className="nav-link fw-medium "
                   aria-current="page"
                   to="/"
                   onClick={() => setSearchOpen(false)}
@@ -301,7 +301,7 @@ function NavBar() {
               <li className="nav-item">
                 <Link
                   to="/products"
-                  className="nav-link fw-medium text-dark"
+                  className="nav-link fw-medium "
                   onClick={() => {
                     window.scrollTo(0, 0);
                     setSearchOpen(false);
@@ -313,7 +313,7 @@ function NavBar() {
               <li className="nav-item">
                 <Link
                   to="/about"
-                  className="nav-link fw-medium text-dark"
+                  className="nav-link fw-medium "
                   onClick={() => {
                     window.scrollTo(0, 0);
                     setSearchOpen(false);
@@ -325,7 +325,7 @@ function NavBar() {
               <li className="nav-item">
                 <Link
                   to="/contact"
-                  className="nav-link fw-medium text-dark"
+                  className="nav-link fw-medium "
                   onClick={() => {
                     window.scrollTo(0, 0);
                     setSearchOpen(false);
@@ -338,14 +338,6 @@ function NavBar() {
           </div>
         </div>
       </nav>
-
-      {/* Spacer when search is open to prevent content jump (since overlay is fixed) */}
-      {searchOpen && (
-        <div
-          className="search-spacer"
-          style={{ height: "var(--navbar-height, 0px)" }}
-        />
-      )}
     </>
   );
 }

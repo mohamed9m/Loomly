@@ -26,7 +26,7 @@ function Hero() {
           made to last, and designed to move with you through every season.
         </p>
         <a href="#products">
-          <button className="btn btn-light shop-now-btn px-4 py-2 fw-semibold details-btn">
+          <button className="btn btn-light shop-now-btn px-4 py-2 fw-semibold ">
             Shop Now
           </button>
         </a>

@@ -8,15 +8,34 @@
   --nf-muted: #55527a;
   background: var(--nf-paper);
   color: var(--nf-ink);
-  font-family: "Bricolage Grotesque", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-family:
+    "Bricolage Grotesque",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    sans-serif;
 }
 
-.nf-main { max-width: 34rem; z-index: 2; }
+[data-theme="dark"] .nf-page {
+  --nf-ink: #e8eadf;
+  --nf-paper: #231f13;
+  --nf-warp: #3a3626;
+  --nf-muted: #a9aea3;
+}
+
+.nf-main {
+  max-width: 34rem;
+  z-index: 2;
+}
 
 .nf-warp {
   z-index: 0;
   pointer-events: none;
-  background: repeating-linear-gradient(90deg, var(--nf-warp) 0 1px, transparent 1px 28px);
+  background: repeating-linear-gradient(
+    90deg,
+    var(--nf-warp) 0 1px,
+    transparent 1px 28px
+  );
   opacity: 0.7;
 }
 
@@ -41,11 +60,21 @@
 }
 
 @keyframes nf-sway {
-  0% { transform: rotate(-9deg); }
-  25% { transform: rotate(6deg); }
-  50% { transform: rotate(-3deg); }
-  75% { transform: rotate(1.5deg); }
-  100% { transform: rotate(0); }
+  0% {
+    transform: rotate(-9deg);
+  }
+  25% {
+    transform: rotate(6deg);
+  }
+  50% {
+    transform: rotate(-3deg);
+  }
+  75% {
+    transform: rotate(1.5deg);
+  }
+  100% {
+    transform: rotate(0);
+  }
 }
 
 .nf-code {
@@ -58,19 +87,38 @@
   background: var(--nf-paper);
 }
 
-.nf-text { color: var(--nf-muted); font-size: 1.05rem; line-height: 1.55; max-width: 28rem; }
+.nf-text {
+  color: var(--nf-muted);
+  font-size: 1.05rem;
+  line-height: 1.55;
+  max-width: 28rem;
+}
 
-.nf-btn { border: 2px solid var(--nf-ink); }
-.nf-btn-primary { background: var(--nf-ink); color: var(--nf-paper); }
-.nf-btn-secondary { background: transparent; color: var(--nf-ink); }
+.nf-btn {
+  border: 2px solid var(--nf-ink);
+}
+.nf-btn-primary {
+  background: var(--nf-ink);
+  color: var(--nf-paper);
+}
+.nf-btn-secondary {
+  background: transparent;
+  color: var(--nf-ink);
+}
 .nf-btn:hover,
 .nf-btn:active {
   background: var(--nf-accent);
   border-color: var(--nf-accent);
   color: var(--nf-ink);
 }
-.nf-btn:focus-visible { outline: 3px solid var(--nf-accent); outline-offset: 3px; box-shadow: none; }
+.nf-btn:focus-visible {
+  outline: 3px solid var(--nf-accent);
+  outline-offset: 3px;
+  box-shadow: none;
+}
 
 @media (prefers-reduced-motion: reduce) {
-  .nf-loose { animation: none; }
+  .nf-loose {
+    animation: none;
+  }
 }

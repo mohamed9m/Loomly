@@ -70,7 +70,14 @@ function CartItem({ item }) {
     }
   };
   return (
-    <div key={item.id} className="card border-0 shadow-sm mb-3">
+    <div
+      key={item.id}
+      className="card border-0 shadow-sm mb-3"
+      style={{
+        backgroundColor: "var(--bg-card)",
+        color: "var(--text-primary)",
+      }}
+    >
       <div className="card-body">
         <div className="row align-items-center g-3">
           <div className="col-3 col-md-2">
@@ -95,6 +102,7 @@ function CartItem({ item }) {
                 className="btn btn-sm quantity-btn fs-5 px-3"
                 aria-label="Decrease quantity"
                 onClick={handleDecreaseFromCart}
+                style={{ color: "var(--text-accent)" }}
               >
                 &minus;
               </button>
@@ -102,9 +110,10 @@ function CartItem({ item }) {
                 <div
                   className="spinner-border spinner-border-sm"
                   style={{
+                    backgroundColor: "var(--bg-card)",
+                    color: "var(--text-primary)",
                     width: "1rem",
                     height: "1rem",
-                    color: "#00000",
                   }}
                   role="status"
                 >
@@ -117,6 +126,7 @@ function CartItem({ item }) {
                 className="btn btn-sm quantity-btn fs-5 px-3"
                 aria-label="Increase quantity"
                 onClick={handleAddToCart}
+                style={{ color: "var(--text-accent)" }}
               >
                 +
               </button>
@@ -134,7 +144,7 @@ function CartItem({ item }) {
                   style={{
                     width: "1.25rem",
                     height: "1.25rem",
-                    color: "#00000",
+                    color: "var(--text-primary)",
                   }}
                   role="status"
                 >

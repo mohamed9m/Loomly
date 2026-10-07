@@ -35,7 +35,7 @@ function ProductCard({ product }) {
   return (
     <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3 mb-3">
       <div
-        className="card h-100 rounded-4 overflow-hidden border shadow-sm product-card"
+        className="card h-100 rounded-4 overflow-hidden  shadow-sm product-card"
         style={{ backgroundColor: "var(--bg-card)" }}
       >
         <Link
@@ -78,14 +78,17 @@ function ProductCard({ product }) {
           <div className="d-flex justify-content-between align-items-center mt-auto pt-2">
             <span
               className="fw-bold fs-5"
-              style={{ color: "var(--accent-dark)" }}
+              style={{ color: "var(--text-accent)" }}
             >
               ${product.price}
             </span>
 
             <button
               className="btn border-0 rounded-circle direct-add-btn d-flex align-items-center justify-content-center p-0"
-              style={{ width: 42, height: 42 }}
+              style={{
+                width: 42,
+                height: 42,
+              }}
               onClick={handleAddToCart}
               disabled={loading}
               aria-label="Add to cart"

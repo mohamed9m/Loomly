@@ -1,13 +1,32 @@
 :root {
   --accent-color: #91b44a;
   --accent-dark: #53662c;
+  --text-accent: #53662c;
+  --bs-body-bg: #f3f0e8;
+  --bs-body-color: #20241a;
   --text-primary: #20241a;
-  --text-secondary: #6b6f63;
-  --bg-page: #f3f0e8;
+  --text-muted: #6b6f63;
   --bg-card: #ffffff;
+  --bg-nav: #ffffff;
+  --bg-footer: #faf9f6;
+  --bs-border-color: #2e2d2d;
 }
-body {
-  background-color: var(--bg-page);
+[data-bs-theme="dark"] {
+  --accent-color: #91b44a;
+  --accent-dark: #53662c;
+  --text-accent: #91b44a;
+  --bs-body-bg: #121212;
+  --bs-body-color: #e8eadf;
+  --text-primary: #e8eadf;
+  --text-muted: #a9aea3;
+  --bg-card: #181a1b;
+  --bg-nav: #0d0d0d;
+  --bg-footer: #1c1c1c;
+  --bs-border-color: #636363;
+}
+
+a {
+  color: var(--text-primary);
 }
 .card-img-top {
   height: 400px;
@@ -18,10 +37,19 @@ body {
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
+  color: var(--accent-dark);
+  border-color: var(--accent-dark) !important;
+}
+[data-bs-theme="dark"] .shop-now-btn {
+  background-color: #1b1e1f;
+  color: var(--accent-color);
+  border-color: var(--accent-color) !important;
 }
 .shop-now-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(255, 255, 255, 0.25);
+  color: white;
+  background-color: var(--accent-dark);
 }
 .details-btn {
   color: var(--accent-dark);
@@ -55,8 +83,12 @@ body {
   border-color: var(--accent-color);
   box-shadow: 0 0 0 0.1rem var(--accent-color);
 }
+.nav-link {
+  color: var(--text-primary) !important;
+  transition: color 0.2s ease;
+}
 .nav-link:hover {
-  color: var(--accent-dark) !important;
+  color: var(--accent-color) !important;
 }
 .card-title {
   height: 40px;
@@ -73,11 +105,12 @@ body {
 
 .register-form {
   border: 1px solid var(--accent-color);
-  background-color: #ffffff;
+  background-color: var(--bg-card);
   border-radius: 16px;
 }
 .search-overlay {
   animation: slideDownOverlay 0.25s forwards;
+  background-color: var(--bg-page);
 }
 .product-card {
   transition:
@@ -94,15 +127,15 @@ body {
   outline: none;
 }
 
-.search-pill {
+.search-bar {
   border: 1px solid transparent;
   transition:
     border-color 0.15s ease,
     box-shadow 0.15s ease;
 }
-.search-pill:focus-within {
+.search-bar:focus-within {
   border-color: var(--accent-dark);
-  box-shadow: 0 0 0 0.2rem rgba(85, 107, 47, 0.2) !important;
+  box-shadow: 0 0 0 0.1rem var(--accent-color) !important;
 }
 
 /* search button */
@@ -175,7 +208,7 @@ body {
   #navbarNav {
     position: fixed;
     padding-left: 1rem;
-    background-color: var(--bg-page) !important;
+    background-color: var(--bg-nav) !important;
     top: 60px !important;
     left: 0;
     height: 100vh;

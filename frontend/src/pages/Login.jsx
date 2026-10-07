@@ -6,7 +6,7 @@ import { useAuth } from "../context/AuthContext";
 import axiosInstance from "../api/axios";
 export default function Login() {
   const { setToken, setIsLoading, isAuthenticated } = useAuth();
-
+  const [loggingIn, setLoggingIn] = useState(false);
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const location = useLocation();
   const navigate = useNavigate();
@@ -65,6 +65,8 @@ export default function Login() {
 
     if (!validate()) return;
     try {
+      setLoggingIn(true);
+      setIsLoading(true);
       setServerError("");
       const response = await axiosInstance.post(
         "/auth/login",
@@ -76,9 +78,10 @@ export default function Login() {
       console.log(response.data);
       const token = response.data.accessToken;
       setToken(token);
-      setIsLoading(false);
+      setLoggingIn(false);
       navigate("/products", { state: { loggedIn: true } });
     } catch (err) {
+      setLoggingIn(false);
       setIsLoading(false);
       if (err.response?.status === 400)
         setServerError("Please check the submitted data.");
@@ -165,7 +168,7 @@ export default function Login() {
                 font-size="40"
                 font-weight="600"
                 letter-spacing="0.5"
-                fill="#20241a"
+                fill="var(--text-primary)"
               >
                 Loomly
               </text>
@@ -266,14 +269,23 @@ export default function Login() {
                   type="submit"
                   className="btn search-btn register-btn w-100"
                 >
-                  Sign In
+                  {loggingIn ? (
+                    <span
+                      className="spinner-border spinner-border-sm"
+                      style={{ "--bs-spinner-border-width": "0.12em" }}
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                  ) : (
+                    "Sign In"
+                  )}
                 </button>
 
                 <p className="text-center text-muted mt-4 mb-0">
                   Don't have an account?
                   <Link
                     to="/register"
-                    className="text-decoration-none fw-semibold ms-2 text-dark"
+                    className="text-decoration-none fw-semibold ms-2"
                   >
                     Sign Up
                   </Link>
