@@ -53,7 +53,7 @@ export default function Products() {
         <div className="container py-5 text-center">
           <h2 className="fw-medium mb-4">
             Search for
-            <span className="ms-2" style={{ color: "var(--accent-dark)" }}>
+            <span className="ms-2" style={{ color: "var(--text-accent)" }}>
               {search}
             </span>
           </h2>
