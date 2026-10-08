@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import ProductsData from "../context/ProductsData";
-import Navbar from "../components/Navbar";
 import CartItem from "../components/CartItem";
 import { ShoppingCart } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
@@ -54,7 +53,6 @@ function Cart() {
 
   return (
     <>
-      <Navbar />
       <div className="container py-5">
         <h2 className="fw-bold mb-4">Your Cart</h2>
 
