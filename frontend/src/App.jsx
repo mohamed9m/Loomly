@@ -65,15 +65,15 @@ function App() {
                 <Route path="/products" Component={ProductsPage} />
                 <Route path="/cart" Component={Cart} />
                 <Route path="/products/:id" Component={Details} />
-                <Route path="/checkout" Component={Checkout} />
-                <Route path="/checkout/:id" Component={QuickCheckout} />
                 <Route path="/contact" Component={Contact} />
                 <Route path="/about" Component={About} />
                 <Route path="/thanks" Component={ThankYou} />
-                <Route path="/register" Component={Register} />
-                <Route path="/login" Component={Login} />
                 <Route path="/profile" Component={Profile} />
               </Route>
+              <Route path="/register" Component={Register} />
+              <Route path="/login" Component={Login} />
+              <Route path="/checkout" Component={Checkout} />
+              <Route path="/checkout/:id" Component={QuickCheckout} />
               <Route path="*" Component={NotFound} />
             </Routes>
           </AuthProvider>

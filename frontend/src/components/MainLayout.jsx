@@ -1,20 +1,15 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Footer from "./Footer";
+import NavBar from "./Navbar";
 
 function MainLayout() {
-  const location = useLocation();
-
   return (
     <div className="min-vh-100 d-flex flex-column">
+      <NavBar />
       <main className="flex-grow-1">
         <Outlet />
       </main>
-
-      {!(
-        location.pathname.startsWith("/checkout") ||
-        location.pathname === "/register" ||
-        location.pathname === "/login"
-      ) && <Footer />}
+      <Footer />
     </div>
   );
 }

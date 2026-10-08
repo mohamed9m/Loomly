@@ -17,7 +17,6 @@ function Cart() {
   if (isLoading) {
     return (
       <>
-        <Navbar />
         <div className="container py-5 d-flex align-items-center justify-content-center vh-100">
           <div className="spinner-border" role="status">
             <span className="visually-hidden">Loading...</span>
@@ -28,7 +27,6 @@ function Cart() {
   } else if (cart.length === 0) {
     return (
       <>
-        <Navbar />
         <div className="container mt-5 py-5 text-center">
           <ShoppingCart
             size={100}

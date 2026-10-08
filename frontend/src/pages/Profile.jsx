@@ -1,7 +1,6 @@
 import { useState, useContext } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import Navbar from "../components/Navbar";
 import axiosInstance from "../api/axios";
 import productsData from "../context/ProductsData";
 function Profile() {
@@ -31,7 +30,6 @@ function Profile() {
 
   return (
     <>
-      <Navbar />
       <main className="container py-5">
         <div className="row g-4 justify-content-center">
           {/* Profile header */}
