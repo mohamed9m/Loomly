@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const helmet = require("helmet");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const methodOverride = require("method-override");
@@ -8,6 +9,7 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 const app = express();
+app.use(helmet());
 const PORT = process.env.PORT || 5000;
 
 const allowedOrigins = [
