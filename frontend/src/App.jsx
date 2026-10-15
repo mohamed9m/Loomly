@@ -1,9 +1,8 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import axiosInstance from "./api/axios";
-import { useState, useReducer, useEffect } from "react";
+import { useState, useEffect } from "react";
 import ProductsData from "./context/ProductsData";
-import cartReducer from "./reducers/cartReducer";
 import { Route, Routes, useSearchParams } from "react-router-dom";
 import "./App.css";
 import AuthProvider from "./components/AuthProvider";
@@ -21,6 +20,7 @@ import Contact from "./pages/Contact";
 import QuickCheckout from "./pages/QuickCheckout";
 import ThankYou from "./pages/ThanksPage";
 import NotFound from "./pages/NotFound";
+import CartProvider from "./components/CartProvider";
 function App() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -41,45 +41,41 @@ function App() {
     };
     fetchProducts();
   }, []);
-  const [cart, dispatch] = useReducer(cartReducer, []);
   const [searchParams, setSearchParams] = useSearchParams();
 
   return (
-    <>
-      <div className="min-vh-100 d-flex flex-column">
-        <ProductsData.Provider
-          value={{
-            products,
-            setProducts,
-            cart,
-            dispatch,
-            searchParams,
-            setSearchParams,
-            loading,
-          }}
-        >
-          <AuthProvider>
-            <Routes>
-              <Route element={<MainLayout />}>
-                <Route path="/" Component={Home} />
-                <Route path="/products" Component={ProductsPage} />
-                <Route path="/cart" Component={Cart} />
-                <Route path="/products/:id" Component={Details} />
-                <Route path="/contact" Component={Contact} />
-                <Route path="/about" Component={About} />
-                <Route path="/thanks" Component={ThankYou} />
-                <Route path="/profile" Component={Profile} />
-              </Route>
-              <Route path="/register" Component={Register} />
-              <Route path="/login" Component={Login} />
-              <Route path="/checkout" Component={Checkout} />
-              <Route path="/checkout/:id" Component={QuickCheckout} />
-              <Route path="*" Component={NotFound} />
-            </Routes>
-          </AuthProvider>
-        </ProductsData.Provider>
-      </div>
-    </>
+    <ProductsData.Provider
+      value={{
+        products,
+        setProducts,
+        searchParams,
+        setSearchParams,
+        loading,
+      }}
+    >
+      <AuthProvider>
+        <CartProvider>
+          <Routes>
+            <Route element={<MainLayout />}>
+              <Route path="/" Component={Home} />
+              <Route path="/products" Component={ProductsPage} />
+              <Route path="/cart" Component={Cart} />
+              <Route path="/products/:id" Component={Details} />
+              <Route path="/contact" Component={Contact} />
+              <Route path="/about" Component={About} />
+              <Route path="/thanks" Component={ThankYou} />
+              <Route path="/profile" Component={Profile} />
+            </Route>
+
+            <Route path="/register" Component={Register} />
+            <Route path="/login" Component={Login} />
+            <Route path="/checkout" Component={Checkout} />
+            <Route path="/checkout/:id" Component={QuickCheckout} />
+            <Route path="*" Component={NotFound} />
+          </Routes>
+        </CartProvider>
+      </AuthProvider>
+    </ProductsData.Provider>
   );
 }
 

@@ -1,28 +1,25 @@
 import { Link } from "react-router-dom";
-import { useState, useContext } from "react";
-import ProductsData from "../context/ProductsData";
+import { useState } from "react";
+import { useCart } from "../context/CartContext";
 import { ShoppingCartPlus } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
+import formatCartProducts from "../scripts/formatCartProducts";
 import axiosInstance from "../api/axios";
 function ProductCard({ product }) {
   const { isAuthenticated } = useAuth();
   const [loading, setLoading] = useState(false);
-  const { dispatch } = useContext(ProductsData);
+  const { dispatch } = useCart();
   const handleAddToCart = async () => {
     setLoading(true);
     try {
-      console.log(isAuthenticated);
-      console.log(!isAuthenticated);
       if (!isAuthenticated) {
         dispatch({ type: "ADD", payload: { ...product, quantity: 1 } });
         return;
       }
       const { data } = await axiosInstance.post(`/cart/${product._id}`); // DB is source of truth for cart
       console.log(data);
-      const products = data.cart.products.map((item) => ({
-        ...item.product,
-        quantity: item.quantity,
-      }));
+      const products = formatCartProducts(data.cart);
+
       dispatch({ type: "SET_CART", payload: products });
     } catch (err) {
       console.log(err.response.status);
@@ -40,7 +37,7 @@ function ProductCard({ product }) {
       >
         <Link
           className="text-decoration-none"
-          to={`/products/${product.id}`}
+          to={`/products/${product._id}`}
           onClick={() => window.scrollTo(0, 0)}
         >
           <div className="ratio" style={{ "--bs-aspect-ratio": "125%" }}>
@@ -56,7 +53,7 @@ function ProductCard({ product }) {
         <div className="card-body d-flex flex-column p-3">
           <Link
             className="text-decoration-none"
-            to={`/products/${product.id}`}
+            to={`/products/${product._id}`}
             onClick={() => window.scrollTo(0, 0)}
           >
             <h6

@@ -153,7 +153,7 @@ export default function Checkout() {
 
               {cart.map((product) => (
                 <div
-                  key={product.id}
+                  key={product._id}
                   className="d-flex justify-content-between mb-3"
                 >
                   <div className="me-3">

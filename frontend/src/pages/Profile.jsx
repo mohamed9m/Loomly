@@ -1,12 +1,12 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useCart } from "../context/CartContext";
 import axiosInstance from "../api/axios";
-import productsData from "../context/ProductsData";
 function Profile() {
   const { profile, isAuthenticated, setProfile, setToken } = useAuth();
 
-  const { dispatch } = useContext(productsData);
+  const { dispatch } = useCart();
   const navigate = useNavigate();
   const [loggingOut, setLoggingOut] = useState(false);
 
@@ -20,6 +20,7 @@ function Profile() {
       setProfile(null);
       setToken(null);
       dispatch({ type: "CLEAR" });
+      localStorage.removeItem("guest_cart");
       navigate("/login", { replace: true });
     } catch (err) {
       console.log(err.response?.data?.message ?? err.message);

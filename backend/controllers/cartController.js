@@ -59,6 +59,84 @@ const addToCart = async (req, res, next) => {
     next(error);
   }
 };
+const mergeCart = async (req, res, next) => {
+  try {
+    const { items } = req.body;
+
+    if (!Array.isArray(items)) {
+      return res.status(400).json({
+        message: "Invalid cart items",
+      });
+    }
+
+    // Validate product IDs and quantities
+    for (const item of items) {
+      if (
+        !mongoose.isValidObjectId(item._id) ||
+        !Number.isInteger(item.quantity) ||
+        item.quantity < 1
+      ) {
+        return res.status(400).json({
+          message: "Invalid cart item",
+        });
+      }
+    }
+
+    // Fetch products from the database
+    const productIds = [...new Set(items.map((item) => item._id))];
+
+    const products = await Product.find({
+      _id: { $in: productIds },
+    });
+
+    if (products.length !== productIds.length) {
+      return res.status(404).json({
+        message: "One or more products were not found",
+      });
+    }
+
+    // Get the user's existing cart
+    let cart = await Cart.findOne({ user: req.userId });
+
+    if (!cart) {
+      cart = await Cart.create({
+        user: req.userId,
+        products: [],
+      });
+    }
+
+    // Merge guest cart with database cart
+    for (const item of items) {
+      const product = products.find(
+        (product) => product._id.toString() === item._id,
+      );
+
+      const existingProduct = cart.products.find((cartItem) =>
+        cartItem.product.equals(product._id),
+      );
+
+      if (existingProduct) {
+        existingProduct.quantity += item.quantity;
+      } else {
+        cart.products.push({
+          product: product._id,
+          quantity: item.quantity,
+        });
+      }
+    }
+
+    await cart.save();
+
+    await cart.populate("products.product");
+
+    res.status(200).json({
+      message: "Cart merged successfully",
+      cart,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 const removeFromCart = async (req, res, next) => {
   try {
     const productId = req.params.id;
@@ -176,4 +254,5 @@ module.exports = {
   removeFromCart,
   decreaseQuantity,
   getCart,
+  mergeCart,
 };

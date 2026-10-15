@@ -101,6 +101,7 @@ export default function Register() {
         setServerError("Something went wrong. Please try again.");
       }
     }
+    setRegistring(false);
   };
 
   return (

@@ -1,9 +1,10 @@
-import { useContext, useState } from "react";
-import ProductsData from "../context/ProductsData";
+import { useState } from "react";
+import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
+import formatCartProducts from "../scripts/formatCartProducts";
 import axiosInstance from "../api/axios";
 function CartItem({ item }) {
-  const { dispatch } = useContext(ProductsData);
+  const { dispatch } = useCart();
   const { isAuthenticated } = useAuth();
   const [quantityLoading, setQuantityLoading] = useState(false);
   const [trashLoading, setTrashLoading] = useState(false);
@@ -12,10 +13,7 @@ function CartItem({ item }) {
       setTrashLoading(true);
       if (isAuthenticated) {
         const { data } = await axiosInstance.delete(`/cart/${item._id}`);
-        const products = data.cart.products.map((item) => ({
-          ...item.product,
-          quantity: item.quantity,
-        }));
+        const products = formatCartProducts(data.cart);
         dispatch({ type: "SET_CART", payload: products });
         setTrashLoading(false);
         return;
@@ -33,10 +31,8 @@ function CartItem({ item }) {
         const { data } = await axiosInstance.patch(
           `/cart/${item._id}/decrease`,
         );
-        const products = data.cart.products.map((item) => ({
-          ...item.product,
-          quantity: item.quantity,
-        }));
+        const products = formatCartProducts(data.cart);
+
         dispatch({ type: "SET_CART", payload: products });
         setQuantityLoading(false);
         return;
@@ -57,12 +53,7 @@ function CartItem({ item }) {
         return;
       }
       const { data } = await axiosInstance.post(`/cart/${item._id}`); // DB is source of truth for cart
-      console.log(data);
-      const products = data.cart.products.map((item) => ({
-        ...item.product,
-        quantity: item.quantity,
-      }));
-      console.log(products);
+      const products = formatCartProducts(data.cart);
       dispatch({ type: "SET_CART", payload: products });
       setQuantityLoading(false);
     } catch (err) {

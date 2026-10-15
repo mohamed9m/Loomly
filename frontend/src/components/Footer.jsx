@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 export default function Footer() {
   return (
     <footer
-      className="mt-5 py-5 border-top"
+      className="mt-5 py-5 shadow-lg"
       style={{ backgroundColor: "var(--bg-footer)" }}
     >
       <div className="container">

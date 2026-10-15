@@ -1,12 +1,11 @@
-import { useContext } from "react";
 import { Link } from "react-router-dom";
-import ProductsData from "../context/ProductsData";
+import { useCart } from "../context/CartContext";
 import CartItem from "../components/CartItem";
 import { ShoppingCart } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 function Cart() {
   const { isLoading } = useAuth();
-  const { cart } = useContext(ProductsData);
+  const { cart } = useCart();
   console.log(cart);
   const totalPrice = cart.reduce(
     (total, product) => total + product.price * product.quantity,

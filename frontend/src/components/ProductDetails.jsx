@@ -1,13 +1,18 @@
 import { useParams, Link } from "react-router-dom";
 import { useContext, useState } from "react";
 import ProductsData from "../context/ProductsData";
+import { useCart } from "../context/CartContext";
 import axiosInstance from "../api/axios";
 import { useAuth } from "../context/AuthContext";
+import formatCartProducts from "../scripts/formatCartProducts";
+
 function ProductDetails() {
   const [loading, setLoading] = useState(false);
-  const { products, dispatch } = useContext(ProductsData);
-  const productId = Number(useParams().id);
-  const product = products.find((item) => item.id === productId);
+  const { products } = useContext(ProductsData);
+  const { dispatch } = useCart();
+  const productId = useParams().id;
+  console.log(productId);
+  const product = products.find((item) => item._id === productId);
   const { isAuthenticated } = useAuth();
 
   const handleAddToCart = async () => {
@@ -20,10 +25,8 @@ function ProductDetails() {
       }
       const { data } = await axiosInstance.post(`/cart/${product._id}`); // DB is source of truth for cart
       console.log(data);
-      const products = data.cart.products.map((item) => ({
-        ...item.product,
-        quantity: item.quantity,
-      }));
+      const products = formatCartProducts(data.cart);
+
       console.log(products);
       dispatch({ type: "SET_CART", payload: products });
       setLoading(false);
@@ -31,10 +34,8 @@ function ProductDetails() {
       console.log(err.response.data.message);
     }
   };
-  const { id } = useParams();
-  const currentProduct = products.find((item) => item.id === Number(id));
-  if (!currentProduct) return <></>;
-  console.log(currentProduct);
+  if (!product) return <></>;
+  console.log(product);
   return (
     <>
       <div
@@ -44,8 +45,8 @@ function ProductDetails() {
         <div className="row mx-0 g-lg-5 ">
           <div className="col-md-6">
             <img
-              src={currentProduct.images[0]}
-              alt={currentProduct.title}
+              src={product.images[0]}
+              alt={product.title}
               className="img-fluid rounded-4 h-100"
               style={{ objectFit: "cover" }}
             />
@@ -53,17 +54,15 @@ function ProductDetails() {
           <div className="col-md-6">
             <div className="card-body text-center">
               <h5 className="card-title fw-bold text-center">
-                {currentProduct.title}
+                {product.title}
               </h5>
-              <p className="text-muted text-start">
-                {currentProduct.description}
-              </p>
+              <p className="text-muted text-start">{product.description}</p>
               <h4 className="fw-bold" style={{ color: "var(--accent-dark)" }}>
-                ${currentProduct.price}
+                ${product.price}
               </h4>
               <ul className="list-unstyled small text-muted mb-3">
                 <li>
-                  <strong>Category:</strong> {currentProduct.category}
+                  <strong>Category:</strong> {product.category}
                 </li>
               </ul>
               <div>
@@ -82,7 +81,7 @@ function ProductDetails() {
                     "Add to Cart"
                   )}
                 </button>
-                <Link to={`/checkout/${id}`}>
+                <Link to={`/checkout/${product._id}`}>
                   <button
                     className="btn btn-dark mt-3 rounded-3 ps-5 w-75 pe-5"
                     style={{ height: 45 }}
@@ -96,9 +95,11 @@ function ProductDetails() {
         </div>
       </div>
       <div className="container">
-        <h2 className="fw-bolder mb-3 text-center text-lg-start mb-lg-4 mt-5">
-          Similer Items You Might Like
-        </h2>
+        <div className="my-5 pb-2 text-center text-lg-start">
+          <h2 className="fw-medium text-center text-lg-start ps-lg-4">
+            You Might Also Like
+          </h2>
+        </div>
       </div>
     </>
   );

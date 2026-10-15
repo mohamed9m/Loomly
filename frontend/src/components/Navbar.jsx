@@ -1,11 +1,11 @@
 import { ShoppingBag, Search, UserRound, X } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import { useContext, useState, useRef, useEffect } from "react";
-import ProductsData from "../context/ProductsData";
+import { useState, useRef, useEffect } from "react";
+import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 import ThemeToggle from "./ThemeToggle";
 function NavBar() {
-  const { cart } = useContext(ProductsData);
+  const { cart } = useCart();
   const { isLoading, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [searchOpen, setSearchOpen] = useState(false);
@@ -119,7 +119,7 @@ function NavBar() {
 
       {/* Main Navbar */}
       <nav
-        className={`navbar navbar-expand-lg shadow-sm sticky-top py-xl-2 py-xxl-3 ${searchOpen ? "search-active" : ""}`}
+        className={`navbar navbar-expand-lg shadow-sm sticky-top py-xl-2 ${searchOpen ? "search-active" : ""}`}
         style={{
           backgroundColor: "var(--bg-nav)",
           zIndex: searchOpen ? 1030 : 1020,
