@@ -4,6 +4,7 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const RefreshToken = require("../models/refreshTokenSchema");
 const User = require("../models/userSchema");
+const refreshCookieOptions = require("../config/cookieOptions");
 
 const handleRegister = async (req, res, next) => {
   const email = req.body.email;
@@ -40,7 +41,6 @@ const handleRegister = async (req, res, next) => {
 const handleLogin = async (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
-
   const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
   if (!email?.trim() || !password?.trim())
     return res.status(400).json({ message: "Email and password are required" });
@@ -75,9 +75,8 @@ const handleLogin = async (req, res, next) => {
     req.userId = user._id;
     res
       .cookie("refreshToken", refreshToken, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "none",
+        ...refreshCookieOptions,
+        maxAge: 30 * 24 * 60 * 60 * 1000,
       })
       .json({ accessToken });
   } catch {
@@ -91,14 +90,15 @@ async function storeRefreshToken(refreshToken, userId, next) {
       .update(refreshToken)
       .digest("hex");
     const family_id = crypto.randomUUID();
-    await RefreshToken.create({
+    const newRefreshToken = await RefreshToken.create({
       tokenHash: tokenHash,
-      expiresAt: new Date(Date.now() + 60 * 60 * 1000 * 24 * 15),
+      expiresAt: new Date(Date.now() + 60 * 60 * 1000 * 24 * 30),
       user: userId,
       family_id: family_id,
       revokedAt: null,
       replacedByToken: null,
     });
+    return newRefreshToken;
   } catch (err) {
     next(err);
   }
@@ -132,26 +132,19 @@ const handleRefreshToken = async (req, res, next) => {
       process.env.REFRESH_TOKEN_SECRET,
       { expiresIn: "30d" },
     );
-    const newRefreshTokenHash = crypto
-      .createHash("sha256")
-      .update(newRefreshToken)
-      .digest("hex");
-    const newRefreshTokenDoc = await RefreshToken.create({
-      tokenHash: newRefreshTokenHash,
-      user: decoded.userId,
-      family_id: refreshTokenDoc.family_id,
-      expiresAt: new Date(Date.now() + 60 * 60 * 1000 * 24 * 15),
-      revokedAt: Date.now(),
-      replacedByToken: null,
-    });
+    const newRefreshTokenDoc = storeRefreshToken(
+      newRefreshToken,
+      decoded.userId,
+      next,
+    );
+
     refreshTokenDoc.revoked = true;
     refreshTokenDoc.replacedByToken = newRefreshTokenDoc._id;
     await refreshTokenDoc.save();
     return res
       .cookie("refreshToken", newRefreshToken, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "none",
+        ...refreshCookieOptions,
+        maxAge: 30 * 24 * 60 * 60 * 1000,
       })
       .json({ accessToken });
   } catch (err) {
