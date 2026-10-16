@@ -20,7 +20,6 @@ export default function ThemeToggle({ size = 24, strokeWidth = 1.75 }) {
   }, [theme]);
 
   const toggle = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
     try {
       const next = theme === "dark" ? "light" : "dark";
       setTheme(next);

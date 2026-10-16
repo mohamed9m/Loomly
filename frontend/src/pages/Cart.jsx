@@ -2,9 +2,8 @@ import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import CartItem from "../components/CartItem";
 import { ShoppingCart } from "lucide-react";
-import { useAuth } from "../context/AuthContext";
 function Cart() {
-  const { isLoading } = useAuth();
+  const { cartLoading } = useCart();
   const { cart } = useCart();
   console.log(cart);
   const totalPrice = cart.reduce(
@@ -12,7 +11,7 @@ function Cart() {
     0,
   );
 
-  if (isLoading) {
+  if (cartLoading) {
     return (
       <>
         <div className="container py-5 d-flex align-items-center justify-content-center vh-100">

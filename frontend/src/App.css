@@ -1,6 +1,5 @@
 :root {
-  --accent-color: #91b44a;
-  --accent-dark: #53662c;
+  --accent-color: #749929;
   --text-accent: #53662c;
   --bs-body-bg: #f3f0e8;
   --bs-body-color: #20241a;
@@ -13,7 +12,6 @@
 }
 [data-bs-theme="dark"] {
   --accent-color: #91b44a;
-  --accent-dark: #53662c;
   --text-accent: #91b44a;
   --bs-body-bg: #121212;
   --bs-body-color: #e8eadf;
@@ -208,8 +206,8 @@ a {
   #navbarNav {
     position: fixed;
     padding-left: 1rem;
-    background-color: var(--bg-nav) !important;
-    top: 2px !important;
+    background-color: var(--bs-body-bg) !important;
+    top: 0px;
     left: 0;
     height: 100vh;
     width: 280px;
@@ -219,5 +217,6 @@ a {
 
   #navbarNav.show {
     transform: translateX(0);
+    box-shadow: var(--bs-box-shadow-lg) !important;
   }
 }

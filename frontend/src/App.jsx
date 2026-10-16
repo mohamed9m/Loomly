@@ -1,5 +1,3 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min";
 import axiosInstance from "./api/axios";
 import { useState, useEffect } from "react";
 import ProductsData from "./context/ProductsData";
@@ -12,9 +10,9 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Cart from "./pages/Cart";
-import Details from "./pages/Details";
+import Details from "./pages/ProductDetails";
 import About from "./pages/About";
-import ProductsPage from "./pages/ProductsPage";
+import Products from "./components/Products";
 import Checkout from "./pages/Checkout";
 import Contact from "./pages/Contact";
 import QuickCheckout from "./pages/QuickCheckout";
@@ -57,7 +55,7 @@ function App() {
           <Routes>
             <Route element={<MainLayout />}>
               <Route path="/" Component={Home} />
-              <Route path="/products" Component={ProductsPage} />
+              <Route path="/products" Component={Products} />
               <Route path="/cart" Component={Cart} />
               <Route path="/products/:id" Component={Details} />
               <Route path="/contact" Component={Contact} />
@@ -65,7 +63,6 @@ function App() {
               <Route path="/thanks" Component={ThankYou} />
               <Route path="/profile" Component={Profile} />
             </Route>
-
             <Route path="/register" Component={Register} />
             <Route path="/login" Component={Login} />
             <Route path="/checkout" Component={Checkout} />

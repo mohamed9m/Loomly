@@ -14,6 +14,7 @@ const AuthProvider = ({ children }) => {
   }, [token]);
   const [profile, setProfile] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [profileLoading, setProfileLoading] = useState(true);
 
   useEffect(() => {
     const initializeAuth = async () => {
@@ -100,11 +101,11 @@ const AuthProvider = ({ children }) => {
         const response = await axiosInstance.get(`/user/profile`);
         setProfile(response.data);
         console.log(response.data);
-        setIsLoading(false);
+        setProfileLoading(false);
       } catch (e) {
         setToken(null);
         tokenRef.current = null;
-        setIsLoading(false);
+        setProfileLoading(false);
         console.log(e);
       }
     };
@@ -122,6 +123,7 @@ const AuthProvider = ({ children }) => {
         setProfile,
         isLoading,
         setIsLoading,
+        profileLoading,
       }}
     >
       {children}

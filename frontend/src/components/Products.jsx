@@ -51,13 +51,13 @@ export default function Products() {
     return (
       <>
         <div className="container py-5 text-center">
-          <h2 className="fw-medium mb-4">
-            Search for
+          <h2 className="fw-normal fs-1 mb-4">
+            Search
             <span className="ms-2" style={{ color: "var(--text-accent)" }}>
-              {search}
+              {`"${search}"`}
             </span>
           </h2>
-          <h2 className="fw-normal mt-5">No Matching Results</h2>
+          <h3 className="fw-normal mt-5">No Matching Results</h3>
           <Link to="/products">
             <button
               className="btn border-0 btn-primary mt-3 rounded-2 px-5 cart-add-btn"
@@ -84,10 +84,10 @@ export default function Products() {
     <div id="products" className="container mt-4 mb-3">
       <div className="row mx-0 g-5">
         {search && (
-          <h2 className="fw-medium mb-4">
-            Search results for
+          <h2 className="fw-normal fs-1 mb-4">
+            Search
             <span className="ms-2" style={{ color: "var(--accent-dark)" }}>
-              {search}
+              {`"${search}"`}
             </span>
           </h2>
         )}

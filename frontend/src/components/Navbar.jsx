@@ -1,4 +1,5 @@
 import { ShoppingBag, Search, UserRound, X } from "lucide-react";
+import Collapse from "bootstrap/js/dist/collapse";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import { useCart } from "../context/CartContext";
@@ -6,7 +7,7 @@ import { useAuth } from "../context/AuthContext";
 import ThemeToggle from "./ThemeToggle";
 function NavBar() {
   const { cart } = useCart();
-  const { isLoading, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -54,8 +55,29 @@ function NavBar() {
   const closeMenuAndNavigate = () => {
     window.scrollTo(0, 0);
     setSearchOpen(false);
+    closeMenu();
   };
+  const menuRef = useRef();
+  const closeMenu = () => {
+    if (!menuRef.current) return;
 
+    const collapse = Collapse.getOrCreateInstance(menuRef.current);
+    collapse.hide();
+  };
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        const collapse = Collapse.getInstance(menuRef.current);
+        collapse?.hide();
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
   return (
     <>
       {/* Search Overlay - Full width, slides down from top of navbar */}
@@ -254,35 +276,27 @@ function NavBar() {
               )}
             </Link>
 
-            {isLoading ? (
-              <div
-                className="spinner-border spinner-border-sm"
-                style={{
-                  width: "1.25rem",
-                  height: "1.25rem",
-                  color: "var(--text-primary)",
-                }}
-                role="status"
-              >
-                <span className="visually-hidden">Loading...</span>
-              </div>
-            ) : (
-              <Link
-                to={isAuthenticated ? "/profile" : "/login"}
-                className="d-flex align-items-center ms-sm-1 ms-lg-0"
-                style={{ fontSize: "1.4rem" }}
-                onClick={closeMenuAndNavigate}
-              >
-                <UserRound />
-              </Link>
-            )}
+            <Link
+              to={isAuthenticated ? "/profile" : "/login"}
+              className="d-flex align-items-center ms-sm-1 ms-lg-0"
+              style={{ fontSize: "1.4rem" }}
+              onClick={closeMenuAndNavigate}
+            >
+              <UserRound />
+            </Link>
+
             <ThemeToggle />
           </div>
 
           {/* Collapse Menu */}
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <div className="d-lg-none border-bottom pb-3 mb-2 mt-4 px-2">
-              <h5 className="fw-bold mb-0 text-muted">Menu</h5>
+          <div
+            ref={menuRef}
+            className="collapse navbar-collapse"
+            id="navbarNav"
+          >
+            <div className="d-lg-none pb-3 mb-2 mt-4 px-2 d-flex justify-content-between ">
+              <h5 className="fw-bold mb-0">Menu</h5>
+              <X onClick={closeMenu} style={{ cursor: "pointer" }} />
             </div>
 
             <ul className="navbar-nav ms-lg-auto mb-2 mb-lg-0 gap-lg-4 mt-3 mt-lg-0">
@@ -292,7 +306,10 @@ function NavBar() {
                   to="/"
                   onClick={closeMenuAndNavigate}
                 >
-                  <i className="fa-solid fa-house me-3 d-lg-none text-muted"></i>
+                  <i
+                    className="fa-solid fa-house me-3 d-lg-none"
+                    style={{ color: "var(--accent-color)" }}
+                  ></i>
                   Home
                 </Link>
               </li>
@@ -302,7 +319,10 @@ function NavBar() {
                   className="nav-link fw-medium px-3 px-lg-0 py-3 py-lg-2 rounded hover-bg-light"
                   onClick={closeMenuAndNavigate}
                 >
-                  <i className="fa-solid fa-box me-3 d-lg-none text-muted"></i>{" "}
+                  <i
+                    className="fa-solid fa-box me-3 d-lg-none"
+                    style={{ color: "var(--accent-color)" }}
+                  ></i>
                   Products
                 </Link>
               </li>
@@ -312,7 +332,10 @@ function NavBar() {
                   className="nav-link fw-medium px-3 px-lg-0 py-3 py-lg-2 rounded hover-bg-light"
                   onClick={closeMenuAndNavigate}
                 >
-                  <i className="fa-solid fa-circle-info me-3 d-lg-none text-muted"></i>{" "}
+                  <i
+                    className="fa-solid fa-circle-info me-3 d-lg-none"
+                    style={{ color: "var(--accent-color)" }}
+                  ></i>
                   About
                 </Link>
               </li>
@@ -322,7 +345,10 @@ function NavBar() {
                   className="nav-link fw-medium px-3 px-lg-0 py-3 py-lg-2 rounded hover-bg-light"
                   onClick={closeMenuAndNavigate}
                 >
-                  <i className="fa-solid fa-envelope me-3 d-lg-none text-muted"></i>{" "}
+                  <i
+                    className="fa-solid fa-envelope me-3 d-lg-none "
+                    style={{ color: "var(--accent-color)" }}
+                  ></i>
                   Contact
                 </Link>
               </li>

@@ -1,6 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { useContext, useState } from "react";
 import ProductsData from "../context/ProductsData";
+import Products from "../components/Products";
 import { useCart } from "../context/CartContext";
 import axiosInstance from "../api/axios";
 import { useAuth } from "../context/AuthContext";
@@ -57,7 +58,7 @@ function ProductDetails() {
                 {product.title}
               </h5>
               <p className="text-muted text-start">{product.description}</p>
-              <h4 className="fw-bold" style={{ color: "var(--accent-dark)" }}>
+              <h4 className="fw-bold" style={{ color: "var(--accent-color)" }}>
                 ${product.price}
               </h4>
               <ul className="list-unstyled small text-muted mb-3">
@@ -95,11 +96,12 @@ function ProductDetails() {
         </div>
       </div>
       <div className="container">
-        <div className="my-5 pb-2 text-center text-lg-start">
-          <h2 className="fw-medium text-center text-lg-start ps-lg-4">
+        <div className="my-5 pb-1 pt-4 text-center text-lg-start">
+          <h2 className="fw-normal text-center text-lg-start ps-lg-4">
             You Might Also Like
           </h2>
         </div>
+        <Products />
       </div>
     </>
   );

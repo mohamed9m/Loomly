@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import cartReducer from "../reducers/cartReducer";
 import axiosInstance from "../api/axios";
@@ -16,7 +16,8 @@ const initCart = () => {
 
 export default function CartProvider({ children }) {
   const [cart, dispatch] = useReducer(cartReducer, null, initCart);
-  const { isAuthenticated, authInitialized, setIsLoading } = useAuth();
+  const { isAuthenticated, authInitialized } = useAuth();
+  const [cartLoading, setCartLoading] = useState(true);
   const fetchCart = async () => {
     try {
       const { data } = await axiosInstance.get("/cart");
@@ -24,9 +25,9 @@ export default function CartProvider({ children }) {
 
       console.log(products);
       dispatch({ type: "SET_CART", payload: products });
-      setIsLoading(false);
+      setCartLoading(false);
     } catch (e) {
-      setIsLoading(false);
+      setCartLoading(false);
       console.log(e);
     }
   };
@@ -50,6 +51,7 @@ export default function CartProvider({ children }) {
           });
           const products = formatCartProducts(data.cart);
           dispatch({ type: "SET_CART", payload: products });
+          setCartLoading(false);
           localStorage.removeItem("guest_cart");
         } else {
           fetchCart();
@@ -62,7 +64,7 @@ export default function CartProvider({ children }) {
     syncCartOnLogin();
   }, [isAuthenticated, authInitialized]);
   return (
-    <CartContext.Provider value={{ cart, dispatch }}>
+    <CartContext.Provider value={{ cart, dispatch, cartLoading }}>
       {children}
     </CartContext.Provider>
   );
