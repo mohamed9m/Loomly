@@ -1,11 +1,8 @@
 function ProductSkeleton() {
   return (
-    <div
-      className="card border-0 col-md-6 col-xl-3 col-lg-4 col-sm-12"
-      style={{ backgroundColor: "var(--bg-card)" }}
-    >
+    <div className="card border-0 col-md-6 col-xl-3 col-lg-4 col-sm-12">
       <div
-        className="placeholder-glow bg-light rounded-2"
+        className="placeholder-glow rounded-2 bg-light"
         style={{ height: 250 }}
       >
         <span className="placeholder w-100 h-100"></span>

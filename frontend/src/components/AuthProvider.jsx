@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import axiosInstance from "../api/axios";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
-const BASE_URL = axiosInstance.defaults.baseURL || "http://localhost:5000/api";
+const BASE_URL = axiosInstance.defaults.baseURL;
 const AuthProvider = ({ children }) => {
   const [token, setToken] = useState();
   const [authInitialized, setAuthInitialized] = useState(false);
