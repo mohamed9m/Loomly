@@ -51,6 +51,10 @@ function NavBar() {
       return !prev;
     });
   };
+  const closeMenuAndNavigate = () => {
+    window.scrollTo(0, 0);
+    setSearchOpen(false);
+  };
 
   return (
     <>
@@ -63,8 +67,8 @@ function NavBar() {
             backgroundColor: "var(--bg-nav)",
             borderBottom: "1px solid rgba(0,0,0,0.08)",
             boxShadow: "0 8px 24px rgba(0,0,0,0.08)",
-            paddingTop: "1rem",
-            paddingBottom: "1.25rem",
+            paddingTop: ".6rem",
+            paddingBottom: ".6rem",
             zIndex: 1040,
           }}
           onClick={(e) => e.stopPropagation()}
@@ -126,11 +130,9 @@ function NavBar() {
           transition: "box-shadow 0.2s ease, z-index 0s 0.2s",
         }}
       >
-        {/* Mobile Menu Toggle */}
-
         <div className="container">
           <button
-            className="navbar-toggler border-0"
+            className="navbar-toggler border-0 shadow-none"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarNav"
@@ -144,12 +146,9 @@ function NavBar() {
 
           {/* Logo */}
           <Link
-            className="navbar-brand fw-bold fs-4 me-auto "
+            className="navbar-brand me-auto me-lg-0 fw-bold"
             to={"/"}
-            onClick={() => {
-              window.scrollTo(0, 0);
-              setSearchOpen(false);
-            }}
+            onClick={closeMenuAndNavigate}
             aria-label="Loomly Home"
           >
             <svg
@@ -166,8 +165,8 @@ function NavBar() {
                   x2="100%"
                   y2="100%"
                 >
-                  <stop offset="0%" stop-color="#A3B37E" />
-                  <stop offset="100%" stop-color="#7C8C5C" />
+                  <stop offset="0%" stopColor="#A3B37E" />
+                  <stop offset="100%" stopColor="#7C8C5C" />
                 </linearGradient>
               </defs>
 
@@ -183,31 +182,31 @@ function NavBar() {
               <path
                 d="M20 16 V52 H54"
                 stroke="#ffffff"
-                stroke-width="7"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="7"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 fill="none"
               />
 
               <path
                 d="M20 26 H33"
                 stroke="#ffffff"
-                stroke-width="2.5"
-                stroke-linecap="round"
+                strokeWidth="2.5"
+                strokeLinecap="round"
                 opacity="0.55"
               />
               <path
                 d="M20 36 H33"
                 stroke="#ffffff"
-                stroke-width="2.5"
-                stroke-linecap="round"
+                strokeWidth="2.5"
+                strokeLinecap="round"
                 opacity="0.55"
               />
               <path
                 d="M20 46 H40"
                 stroke="#ffffff"
-                stroke-width="2.5"
-                stroke-linecap="round"
+                strokeWidth="2.5"
+                strokeLinecap="round"
                 opacity="0.55"
               />
 
@@ -215,11 +214,10 @@ function NavBar() {
             </svg>
           </Link>
 
-          {/* Right Action Icons: Search | Cart | Profile */}
-          <div className="d-flex align-items-center gap-2 gap-lg-3 ms-sm-auto">
-            {/* Search Trigger */}
+          {/* Right Action Icons */}
+          <div className="d-flex align-items-center gap-2 gap-lg-3 ms-0 ms-lg-auto">
             <button
-              className="btn btn-link  p-0 position-relative"
+              className="btn btn-link p-0 position-relative"
               style={{
                 fontSize: "1.25rem",
                 lineHeight: 1,
@@ -233,15 +231,11 @@ function NavBar() {
               <Search />
             </button>
 
-            {/* Cart */}
             <Link
-              className="position-relative "
+              className="position-relative"
               style={{ fontSize: "1.25rem", lineHeight: 1 }}
               to="/cart"
-              onClick={() => {
-                window.scrollTo(0, 0);
-                setSearchOpen(false);
-              }}
+              onClick={closeMenuAndNavigate}
             >
               <ShoppingBag strokeWidth={1.75} />
               {cartQuantity > 0 && (
@@ -260,7 +254,6 @@ function NavBar() {
               )}
             </Link>
 
-            {/* Profile / Login */}
             {isLoading ? (
               <div
                 className="spinner-border spinner-border-sm"
@@ -276,61 +269,60 @@ function NavBar() {
             ) : (
               <Link
                 to={isAuthenticated ? "/profile" : "/login"}
-                className=" d-flex align-items-center ms-sm-1 ms-lg-0"
+                className="d-flex align-items-center ms-sm-1 ms-lg-0"
                 style={{ fontSize: "1.4rem" }}
-                onClick={() => setSearchOpen(false)}
+                onClick={closeMenuAndNavigate}
               >
-                <UserRound />{" "}
+                <UserRound />
               </Link>
             )}
             <ThemeToggle />
           </div>
-          {/* Collapsible Nav Links */}
-          <div className="container collapse navbar-collapse" id="navbarNav">
+
+          {/* Collapse Menu */}
+          <div className="collapse navbar-collapse" id="navbarNav">
+            <div className="d-lg-none border-bottom pb-3 mb-2 mt-4 px-2">
+              <h5 className="fw-bold mb-0 text-muted">Menu</h5>
+            </div>
+
             <ul className="navbar-nav ms-lg-auto mb-2 mb-lg-0 gap-lg-4 mt-3 mt-lg-0">
               <li className="nav-item">
                 <Link
-                  className="nav-link fw-medium "
-                  aria-current="page"
+                  className="nav-link fw-medium px-3 px-lg-0 py-3 py-lg-2 rounded hover-bg-light"
                   to="/"
-                  onClick={() => setSearchOpen(false)}
+                  onClick={closeMenuAndNavigate}
                 >
+                  <i className="fa-solid fa-house me-3 d-lg-none text-muted"></i>
                   Home
                 </Link>
               </li>
               <li className="nav-item">
                 <Link
                   to="/products"
-                  className="nav-link fw-medium "
-                  onClick={() => {
-                    window.scrollTo(0, 0);
-                    setSearchOpen(false);
-                  }}
+                  className="nav-link fw-medium px-3 px-lg-0 py-3 py-lg-2 rounded hover-bg-light"
+                  onClick={closeMenuAndNavigate}
                 >
+                  <i className="fa-solid fa-box me-3 d-lg-none text-muted"></i>{" "}
                   Products
                 </Link>
               </li>
               <li className="nav-item">
                 <Link
                   to="/about"
-                  className="nav-link fw-medium "
-                  onClick={() => {
-                    window.scrollTo(0, 0);
-                    setSearchOpen(false);
-                  }}
+                  className="nav-link fw-medium px-3 px-lg-0 py-3 py-lg-2 rounded hover-bg-light"
+                  onClick={closeMenuAndNavigate}
                 >
+                  <i className="fa-solid fa-circle-info me-3 d-lg-none text-muted"></i>{" "}
                   About
                 </Link>
               </li>
               <li className="nav-item">
                 <Link
                   to="/contact"
-                  className="nav-link fw-medium "
-                  onClick={() => {
-                    window.scrollTo(0, 0);
-                    setSearchOpen(false);
-                  }}
+                  className="nav-link fw-medium px-3 px-lg-0 py-3 py-lg-2 rounded hover-bg-light"
+                  onClick={closeMenuAndNavigate}
                 >
+                  <i className="fa-solid fa-envelope me-3 d-lg-none text-muted"></i>{" "}
                   Contact
                 </Link>
               </li>

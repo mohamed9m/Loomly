@@ -63,12 +63,12 @@ export default function Products() {
               className="btn border-0 btn-primary mt-3 rounded-2 px-5 cart-add-btn"
               style={{ height: 45 }}
             >
-              Continue Shopping
+              Continue&nbsp;Shopping
             </button>
           </Link>
         </div>
         <div id="products" className="container mt-4 mb-3">
-          <h2 className="fw-medium mb-4">Other Products</h2>
+          <h2 className="fw-normal ps-sm-2 ps-lg-3 mb-4">Other Products</h2>
           <div className="row mx-0 g-3">
             {products.map((product) => (
               <ProductCard key={product.id} product={product} />

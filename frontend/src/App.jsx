@@ -28,7 +28,6 @@ function App() {
     const fetchProducts = async () => {
       try {
         const { data } = await axiosInstance.get("/product");
-
         const productsData = data;
         setProducts(productsData.products);
       } catch (err) {

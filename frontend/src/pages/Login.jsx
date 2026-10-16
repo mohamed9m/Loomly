@@ -205,6 +205,7 @@ export default function Login() {
                     name="email"
                     type="email"
                     className={`form-control ${errors.email ? "is-invalid" : ""}`}
+                    style={{ borderColor: "#a7a6a6" }}
                     placeholder="Enter your email address"
                     value={form.email}
                     onChange={handleChange}
@@ -238,6 +239,7 @@ export default function Login() {
                       className={`form-control ${
                         errors.password ? "is-invalid" : ""
                       }`}
+                      style={{ borderColor: "#a7a6a6" }}
                       placeholder="Enter your password"
                       value={form.password}
                       onChange={handleChange}
