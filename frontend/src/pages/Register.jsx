@@ -306,7 +306,7 @@ export default function Register() {
 
               <button
                 type="submit"
-                className="btn search-btn register-btn w-100 "
+                className="btn login-btn register-btn w-100 "
               >
                 {registring ? (
                   <span

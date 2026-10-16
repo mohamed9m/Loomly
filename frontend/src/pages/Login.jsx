@@ -269,7 +269,7 @@ export default function Login() {
                 )}
                 <button
                   type="submit"
-                  className="btn search-btn register-btn w-100"
+                  className="btn login-btn register-btn w-100"
                 >
                   {loggingIn ? (
                     <span

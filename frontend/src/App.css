@@ -136,25 +136,25 @@ a {
   box-shadow: 0 0 0 0.1rem var(--accent-color) !important;
 }
 
-/* search button */
-.search-btn {
+/* login button */
+.login-btn {
   width: 48px;
   height: 44px;
-  background-color: var(--accent-dark);
+  background-color: var(--accent-color);
   color: #fff;
   border: 0;
   border-radius: 0.5rem;
   transition: opacity 0.15s ease;
 }
-.search-btn:hover {
+.login-btn:hover {
   color: white;
   background-color: var(--accent-color);
 }
-.search-btn:hover:not(:disabled) {
+.login-btn:hover:not(:disabled) {
   color: #fff;
 }
-.search-btn:disabled {
-  background-color: var(--accent-dark);
+.login-btn:disabled {
+  background-color: var(--accent-color);
   color: #fff;
   opacity: 0.45;
 }

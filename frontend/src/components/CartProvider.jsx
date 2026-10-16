@@ -39,7 +39,10 @@ export default function CartProvider({ children }) {
 
   useEffect(() => {
     const syncCartOnLogin = async () => {
-      if (!isAuthenticated || !authInitialized) return;
+      if (!isAuthenticated || !authInitialized) {
+        setCartLoading(false);
+        return;
+      }
 
       try {
         const savedGuestCart =
