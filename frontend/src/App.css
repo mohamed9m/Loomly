@@ -35,8 +35,8 @@ a {
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
-  color: var(--accent-dark);
-  border-color: var(--accent-dark) !important;
+  color: var(--accent-color);
+  border-color: var(--accent-color) !important;
 }
 [data-bs-theme="dark"] .shop-now-btn {
   background-color: #1b1e1f;
@@ -47,7 +47,7 @@ a {
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(255, 255, 255, 0.25);
   color: white;
-  background-color: var(--accent-dark);
+  background-color: var(--accent-color);
 }
 .details-btn {
   color: var(--accent-dark);
