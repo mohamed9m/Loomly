@@ -52,8 +52,10 @@ function NavBar() {
       return !prev;
     });
   };
-  const closeSearchAndNavigate = () => {
+  const closeMenuFromLinks = () => {
     window.scrollTo(0, 0);
+    const collapse = Collapse.getOrCreateInstance(menuRef.current);
+    collapse.hide();
     setSearchOpen(false);
   };
   const menuRef = useRef();
@@ -169,7 +171,7 @@ function NavBar() {
           <Link
             className="navbar-brand me-auto me-lg-0 fw-bold"
             to={"/"}
-            onClick={closeSearchAndNavigate}
+            onClick={closeMenuFromLinks}
             aria-label="Loomly Home"
           >
             <svg
@@ -256,7 +258,7 @@ function NavBar() {
               className="position-relative"
               style={{ fontSize: "1.25rem", lineHeight: 1 }}
               to="/cart"
-              onClick={closeSearchAndNavigate}
+              onClick={closeMenuFromLinks}
             >
               <ShoppingBag strokeWidth={1.75} />
               {cartQuantity > 0 && (
@@ -279,7 +281,7 @@ function NavBar() {
               to={isAuthenticated ? "/profile" : "/login"}
               className="d-flex align-items-center ms-sm-1 ms-lg-0"
               style={{ fontSize: "1.4rem" }}
-              onClick={closeSearchAndNavigate}
+              onClick={closeMenuFromLinks}
             >
               <UserRound />
             </Link>
@@ -303,7 +305,7 @@ function NavBar() {
                 <Link
                   className="nav-link fw-medium px-3 px-lg-0 py-3 py-lg-2 rounded hover-bg-light"
                   to="/"
-                  onClick={closeSearchAndNavigate}
+                  onClick={closeMenuFromLinks}
                 >
                   <i
                     className="fa-solid fa-house me-3 d-lg-none"
@@ -316,7 +318,7 @@ function NavBar() {
                 <Link
                   to="/products"
                   className="nav-link fw-medium px-3 px-lg-0 py-3 py-lg-2 rounded hover-bg-light"
-                  onClick={closeSearchAndNavigate}
+                  onClick={closeMenuFromLinks}
                 >
                   <i
                     className="fa-solid fa-box me-3 d-lg-none"
@@ -329,7 +331,7 @@ function NavBar() {
                 <Link
                   to="/about"
                   className="nav-link fw-medium px-3 px-lg-0 py-3 py-lg-2 rounded hover-bg-light"
-                  onClick={closeSearchAndNavigate}
+                  onClick={closeMenuFromLinks}
                 >
                   <i
                     className="fa-solid fa-circle-info me-3 d-lg-none"
@@ -342,7 +344,7 @@ function NavBar() {
                 <Link
                   to="/contact"
                   className="nav-link fw-medium px-3 px-lg-0 py-3 py-lg-2 rounded hover-bg-light"
-                  onClick={closeSearchAndNavigate}
+                  onClick={closeMenuFromLinks}
                 >
                   <i
                     className="fa-solid fa-envelope me-3 d-lg-none "
