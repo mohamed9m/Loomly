@@ -122,7 +122,7 @@ export default function Checkout() {
                 font-size="40"
                 font-weight="600"
                 letter-spacing="0.5"
-                fill="#20241a"
+                fill="var(--bs-body-color)"
               >
                 Loomly
               </text>
