@@ -55,7 +55,6 @@ function NavBar() {
   const closeMenuAndNavigate = () => {
     window.scrollTo(0, 0);
     setSearchOpen(false);
-    closeMenu();
   };
   const menuRef = useRef();
   const closeMenu = () => {
