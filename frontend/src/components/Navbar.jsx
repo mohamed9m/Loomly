@@ -151,6 +151,7 @@ function NavBar() {
           backgroundColor: "var(--bg-nav)",
           zIndex: searchOpen ? 1030 : 1020,
           transition: "box-shadow 0.2s ease, z-index 0s 0.2s",
+          height: "64px",
         }}
       >
         <div className="container">
