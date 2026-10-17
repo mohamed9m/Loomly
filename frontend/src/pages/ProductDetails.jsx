@@ -36,7 +36,6 @@ function ProductDetails() {
     }
   };
   if (!product) return <></>;
-  console.log(product);
   return (
     <>
       <div

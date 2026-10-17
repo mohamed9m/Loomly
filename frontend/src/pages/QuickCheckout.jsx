@@ -8,9 +8,10 @@ export default function QuickCheckout() {
   const { products } = useContext(ProductsData);
 
   const { id } = useParams();
-
-  const product = products.find((product) => product.id === Number(id));
-
+  console.log(id);
+  console.log(products);
+  const product = products.find((product) => product._id === id);
+  console.log(product);
   const [formData, setFormData] = useState({
     name: "",
     email: "",

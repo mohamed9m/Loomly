@@ -1,11 +1,11 @@
 import { useContext, useState } from "react";
-import ProductsData from "../context/ProductsData";
 import governorates from "../data/governorates";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.svg";
+import { CartContext } from "../context/CartContext";
 
 export default function Checkout() {
-  const { cart } = useContext(ProductsData);
+  const { cart } = useContext(CartContext);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -209,7 +209,7 @@ export default function Checkout() {
           </div>
         </div>
       </form>
-      <Link to="/products" className="btn rounded-3 details-btn my-3 px-4">
+      <Link to="/products" className="btn rounded-3 btn-dark my-3 px-4">
         ← Back to Products
       </Link>
     </div>
